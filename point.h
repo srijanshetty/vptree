@@ -33,10 +33,14 @@ namespace VPTree {
     class Point {
         public:
             // The coordiantes of the point
-            std::vector <double> coordinates;
+            std::vector <double> coordinates = std::vector<double>(0.0, DIMENSIONS);
 
         public:
-            Point(std::vector<double> _coordinates) : coordinates(_coordinates) {};
+            // The default constructor
+            Point() { };
+
+            // The standard constructor
+            Point(std::vector<double> _coordinates) : coordinates(_coordinates) { };
 
             // Compute the distance between this point and a provided point
             double distance(const Point &otherPoint) const;
