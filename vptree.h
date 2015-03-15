@@ -100,5 +100,8 @@ namespace VPTree {
 
             // Split the node according to median
             void split();
+
+            // Insert an object into the node
+            void insert(DBObject targetObject, double objectDistance);
     };
 }
