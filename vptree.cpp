@@ -54,6 +54,34 @@ namespace VPTree {
         // Return the distance from the cache
         return distanceCache[objectIndex];
     }
+
+    /* Split the node according to the media */
+    void Node::split() {
+    }
+
+    /* Insert a point into the VPTree */
+    void insert(Node *root, DBObject object) {
+        // Check if the root is a leaf
+        if (root->isLeaf()) {
+            /* Directly insert the object into the root's cache and then split if
+               we've reached the sample size limit */
+            root->insertToCache(object);
+
+            if (root->getCacheSize() > SAMPLE_SIZE) {
+                root->split();
+            }
+        } else {
+            /* Compute the distance of the object from the root and insert into the correct subtree */
+            double objectDistance = root->distance(object);
+
+            /* It will never be the case that one of the subtrees is empty, this is because we sample
+               the objects and then split according to the median, this gurantees that half the nodes
+               will go to one side and the rest on the other */
+            if (objectDistance < root->getRadius()) {
+                insert(root->leftNode, object);
+            } else {
+                insert(root->rightNode, object);
+            }
+        }
+    }
 }
-
-

@@ -23,8 +23,20 @@
 // Include the VPTree library
 #include "vptree.h"
 
+// Stream processing
+#include <iostream>
+
+using namespace std;
+using namespace VPTree;
+
 int main() {
+    vector<double> p1 = {1.0, 0.0};
+    vector<double> p2 = {4.0, 0.0};
+
+    Point alpha(p1);
+    Point beta(p2);
+
+    cout << alpha.distance(beta);
+
     return 0;
 }
-
-

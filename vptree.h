@@ -91,5 +91,8 @@ namespace VPTree {
 
             // get the distance from the cache
             double getDistanceFromCache(DBObject searchObject);
+
+            // Split the node according to median
+            void split();
     };
 }
