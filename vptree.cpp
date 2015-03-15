@@ -27,7 +27,33 @@
 #include <fstream>
 
 namespace VPTree {
-    Node *VPRoot = nullptr;
+    // Print the node
+    void Node::print() const {
+        // Print the object
+        std::cout << std::endl << "Object: ";
+        object.print();
+
+        // Print the cache
+        // std::cout << std::endl << "Cache: ";
+        // for (auto object : objectCache) {
+            // std::cout << "\t";
+            // object.print();
+            // std::cout << std::endl;
+        // }
+        // std::cout << std::endl << std::endl;
+
+        // Print the leftNode
+        if (leftNode != nullptr) {
+            std::cout << std::endl << "\tLeftNode: ";
+            leftNode->object.print();
+        }
+
+        // Print the rightNode
+        if (rightNode != nullptr) {
+            std::cout << std::endl << "\tRightNode: ";
+            rightNode->object.print();
+        }
+    }
 
     // Insert an object into the objectCache
     void Node::insertToCache(DBObject insertObject, double objectDistance) {

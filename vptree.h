@@ -54,6 +54,9 @@ namespace VPTree {
 
             // Compute the distance between objects
             double distance(const DBObject &targetObject) const { return objectPoint.distance(targetObject.getObjectPoint()); };
+
+            // Print the object
+            void print() const { objectPoint.print(); std::cout << " :: " << objectID << " :: " << dataString; }
     };
 
     class Node {
@@ -85,6 +88,9 @@ namespace VPTree {
 
             // Compute the distance of the root to a object
             double distance(const DBObject &targetObject) { return object.distance(targetObject); }
+
+            // Print the node
+            void print() const;
 
             // Insert an object into the objectCache
             void insertToCache(DBObject insertObject, double objectDistance);
