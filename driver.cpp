@@ -65,7 +65,7 @@ void buildTree(Node *root) {
         }
 
         // Insert the object into file
-        root->insert(DBObject(objectID, dataString, point), 0.0);
+        root->insert(DBObject(objectID, dataString, point));
     }
 
     // Close the file

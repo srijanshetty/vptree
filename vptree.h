@@ -29,7 +29,6 @@
 // STL required by VPTRee
 #include <string>
 #include <vector>
-#include <map>
 
 // Stream output
 #include <iostream>
@@ -67,9 +66,7 @@ namespace VPTree {
 
         public:
             // A cache of elements
-            std::map<long long, long long> indexCache;
             std::vector<DBObject> objectCache;
-            std::map<long long, double> distanceCache;
 
             // Information about children
             Node *rightNode = nullptr;
@@ -92,16 +89,10 @@ namespace VPTree {
             // Print the node
             void print();
 
-            // Insert an object into the objectCache
-            void insertToCache(DBObject insertObject, double objectDistance);
-
-            // get the distance from the cache
-            double getDistanceFromCache(DBObject searchObject);
-
             // Split the node according to median
             void split();
 
             // Insert an object into the node
-            void insert(DBObject targetObject, double objectDistance);
+            void insert(DBObject targetObject);
     };
 }

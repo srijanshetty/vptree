@@ -26,21 +26,36 @@
 // Stream processing
 #include <fstream>
 
+// STL Algorithm
+#include <algorithm>
+
+// Math
+#include <limits>
+
 namespace VPTree {
+    // Compute distance from root
+    double Node::distance(const DBObject &targetObject) const {
+        if (!isLeaf()) {
+            return object.distance(targetObject);
+        } else {
+            return std::numeric_limits<double>::max();
+        }
+    }
+
     // Print the node
-    void Node::print() const {
+    void Node::print()  {
         // Print the object
         std::cout << std::endl << "Object: ";
         object.print();
 
         // Print the cache
-        // std::cout << std::endl << "Cache: ";
-        // for (auto object : objectCache) {
-            // std::cout << "\t";
-            // object.print();
-            // std::cout << std::endl;
-        // }
-        // std::cout << std::endl << std::endl;
+        std::cout << std::endl << "Cache: ";
+        for (auto object : objectCache) {
+            std::cout << "\t";
+            object.print();
+            std::cout << std::endl;
+        }
+        std::cout << std::endl << std::endl;
 
         // Print the leftNode
         if (leftNode != nullptr) {
@@ -55,60 +70,34 @@ namespace VPTree {
         }
     }
 
-    // Insert an object into the objectCache
-    void Node::insertToCache(DBObject insertObject, double objectDistance) {
-        /* obtain the insert index and then add the distance and object
-           to the hashmaps */
-
-        // Insert the index into the indexCache
-        long long insertIndex = indexCache.size();
-        indexCache[object.getObjectID()] = insertIndex;
-
-        // Insert the distance into the distanceCache
-        distanceCache[insertIndex] = objectDistance;
-
-        // Insert the object into the hashmap
-        objectCache.push_back(insertObject);
-    }
-
-    // Get the distance of an object
-    double Node::getDistanceFromCache(DBObject searchObject) {
-        /* Get the index of the object from the indexCache and then get
-           the distance from the distance cache */
-        long long objectIndex = indexCache[searchObject.getObjectID()];
-
-        // Return the distance from the cache
-        return distanceCache[objectIndex];
-    }
-
     /* Split the node according to the media */
     void Node::split() {
         /* We have to split the current node into three nodes, a parent and two children
            the nodes in cache as the sample */
-
-        // Compute the mean distance and the median distance
     }
 
     /* Insert a point into the VPTree */
-    void Node::insert(DBObject object, double objectDistance) {
+    void Node::insert(DBObject object) {
         // Check if the root is a leaf
         if (isLeaf()) {
             /* Directly insert the object into the root's cache and then split if
                we've reached the sample size limit */
-            insertToCache(object, objectDistance);
+            objectCache.push_back(object);
 
             if (getCacheSize() > SAMPLE_SIZE) {
                 split();
             }
         } else {
+            /* Compute the distance of the object from the root and insert into the correct subtree */
+            double objectDistance = distance(object);
+
             /* It will never be the case that one of the subtrees is empty, this is because we sample
                the objects and then split according to the median, this gurantees that half the nodes
                will go to one side and the rest on the other */
-            /* Compute the distance of the object from the root and insert into the correct subtree */
             if (objectDistance < radius) {
-                leftNode->insert(object, leftNode->distance(object));
+                leftNode->insert(object);
             } else {
-                rightNode->insert(object, rightNode->distance(object));
+                rightNode->insert(object);
             }
         }
     }
