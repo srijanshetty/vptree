@@ -87,10 +87,10 @@ namespace VPTree {
             bool isLeaf() const { return ((rightNode == nullptr) && (leftNode == nullptr)); }
 
             // Compute the distance of the root to a object
-            double distance(const DBObject &targetObject) { return object.distance(targetObject); }
+            double distance(const DBObject &targetObject) const;
 
             // Print the node
-            void print() const;
+            void print();
 
             // Insert an object into the objectCache
             void insertToCache(DBObject insertObject, double objectDistance);
