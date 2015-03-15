@@ -20,41 +20,16 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-// Configuration parameters
-#include "config.h"
+/* ------------- POINT -------------- */
+#define DIMENSIONS 2
+#define DISTANCE_EUCLIDEAN
+// #define DISTANCE_MAHALONOBIS
 
-// Standard containers
-#include <vector>
+/* ------------- VPTREE ------------- */
+#define POINTS 1000000
+#define SAMPLE_SIZE (POINTS * 0.001)
 
-// Math functions
-#include <math.h>
+/* ------------- DATAFILE------------ */
+#define DATAFILE "./assgn5_data.txt"
+#define QUERYFILE "./assgn5_querysample.txt"
 
-namespace VPTree {
-    class Point {
-        private:
-            // Store the number of comparisons
-            static long long comparisons;
-
-            // Update the number of comparisons
-            void incrementComparisons() { ++comparisons; }
-
-        public:
-            // Return the number of euclidean comparisons
-            long long getComparisons() const { return comparisons; }
-
-        private:
-            std::vector <double> coordinates;
-
-        public:
-            Point(std::vector<double> _coordinates) : coordinates(_coordinates) {};
-
-            // Compute the Euclidean distance to another point
-            double Euclidean(std::vector<double> point) const;
-
-            // Compute the Mahalonobis distance to a point
-            double Mahalonobis(std::vector<double> point) const;
-
-            // Compute the distance between this point and a provided point
-            double distance(std::vector<double> point);
-    };
-}

@@ -20,6 +20,9 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+// Configuration parameters
+#include "config.h"
+
 // Include the point library
 #include "point.h"
 

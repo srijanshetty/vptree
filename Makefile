@@ -9,11 +9,11 @@ driver.o: driver.cpp vptree.o point.o
 	$(CC) $(DEBUG) driver.cpp vptree.o point.o -o tree.out
 
 # Build the vptree library
-vptree.o: point.h vptree.h vptree.cpp
+vptree.o: point.h vptree.h vptree.cpp config.h
 	$(CC) $(CFLAGS) $(DEBUG) vptree.cpp
 
 # Build the point library
-point.o: point.h point.cpp
+point.o: point.h point.cpp config.h
 	$(CC) $(CFLAGS) $(DEBUG) point.cpp
 
 clean:
