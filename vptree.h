@@ -33,15 +33,21 @@
 // Stream output
 #include <iostream>
 
+// Math
+#include <limits>
+
 namespace VPTree {
     class DBObject {
         private:
             // Information about the object
-            long long objectID;
-            std::string dataString;
-            Point objectPoint;
+            long long objectID = -1;
+            std::string dataString = "";
+            Point objectPoint = Point();
 
         public:
+            // Default constructor
+            DBObject() { };
+
             // Construct a DBObject
             DBObject(long long objectID, std::string dataString, Point objectPoint) :
                 objectID(objectID), dataString(dataString), objectPoint(objectPoint) { };
@@ -61,8 +67,8 @@ namespace VPTree {
     class Node {
         private:
             // Information about the Node
-            double radius;
-            DBObject object;
+            double radius = std::numeric_limits<double>::max();
+            DBObject object = DBObject();
 
         public:
             // A cache of elements
@@ -73,6 +79,9 @@ namespace VPTree {
             Node *leftNode = nullptr;
 
         public:
+            // Default constructor
+            Node() { };
+
             // Constructor which constructs an object
             Node(double radius, DBObject object) : radius(radius), object(object) { };
 
