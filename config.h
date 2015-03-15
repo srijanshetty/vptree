@@ -34,3 +34,5 @@
 #define DATAFILE "./assgn5_data.txt"
 #define QUERYFILE "./assgn5_querysample.txt"
 
+/* ------------- DEBUG -------------- */
+// #define DEBUG_SPLIT
