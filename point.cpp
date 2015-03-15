@@ -23,36 +23,29 @@
 #include "point.h"
 
 namespace VPTree {
-    // Compute the Euclidean distance to a point
-    double Point::Euclidean(std::vector<double> point) const {
-        double distance = 0;
-        for (long long i = 0; i < DIMENSIONS; ++i) {
-            distance += (point[i] - coordinates[i]) * (point[i] - coordinates[i]);
-        }
-        return sqrt(distance);
-    }
-
-    // Compute the Mahalonobis distance to a point
-    double Point::Mahalonobis(std::vector<double> point) const {
-        return Euclidean(point);
-    }
+    // Store the number of comparisons
+    long long comparisons = 0;
 
     // Compute the distance between this point and a provided point
-    double Point::distance(std::vector<double> point) {
-        // Update the distance counter
-        Point::incrementComparisons();
+    double Point::distance(const Point &otherPoint) const {
+        ++comparisons;
 
 #ifdef DISTANCE_EUCLIDEAN
-        // Call the distance function
-        return Euclidean(point);
+        // Compute the Euclidean distance to another point
+        double distance = 0;
+        for (long long i = 0; i < DIMENSIONS; ++i) {
+            distance += (otherPoint.coordinates[i] - coordinates[i]) * (otherPoint.coordinates[i] - coordinates[i]);
+        }
+        return sqrt(distance);
 #endif
 
 #ifdef DISTANCE_MAHALONOBIS
-        // Call the distance function
-        return Mahalonobis(point);
+        // Compute the Mahalonobis distance to a point
+        double distance = 0;
+        for (long long i = 0; i < DIMENSIONS; ++i) {
+            distance += (otherPoint.coordinates[i] - coordinates[i]) * (otherPoint.coordinates[i] - coordinates[i]);
+        }
+        return sqrt(distance);
 #endif
     }
-
-    // Setup the static variables
-    long long Point::comparisons = 0;
 }

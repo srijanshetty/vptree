@@ -31,30 +31,14 @@
 
 namespace VPTree {
     class Point {
-        private:
-            // Store the number of comparisons
-            static long long comparisons;
-
-            // Update the number of comparisons
-            void incrementComparisons() { ++comparisons; }
-
         public:
-            // Return the number of euclidean comparisons
-            long long getComparisons() const { return comparisons; }
-
-        private:
+            // The coordiantes of the point
             std::vector <double> coordinates;
 
         public:
             Point(std::vector<double> _coordinates) : coordinates(_coordinates) {};
 
-            // Compute the Euclidean distance to another point
-            double Euclidean(std::vector<double> point) const;
-
-            // Compute the Mahalonobis distance to a point
-            double Mahalonobis(std::vector<double> point) const;
-
             // Compute the distance between this point and a provided point
-            double distance(std::vector<double> point);
+            double distance(const Point &otherPoint) const;
     };
 }
