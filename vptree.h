@@ -98,6 +98,9 @@ namespace VPTree {
             // Print the node
             void print();
 
+            // Print the tree recursive
+            void printRecursive();
+
             // Split the node according to median
             void split();
 

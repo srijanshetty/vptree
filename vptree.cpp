@@ -28,6 +28,7 @@
 
 // STL Algorithm
 #include <algorithm>
+#include <queue>
 
 // Math
 #include <limits>
@@ -69,6 +70,95 @@ namespace VPTree {
             std::cout << std::endl << "RightSubtree: ";
             rightNode->object.print();
         }
+    }
+
+    // Print the tree recursively
+    void Node::printRecursive() {
+        // Prettify
+        std::cout << std::endl << std::endl;
+
+        // To store the previous Level
+        std::queue< std::pair<Node*, char> > previousLevel;
+        previousLevel.push(std::make_pair(this, 'N'));
+
+        // To store the leaves
+        std::queue< std::pair<DBObject, char> > leaves;
+
+        Node *iterator;
+        char type;
+        while (!previousLevel.empty()) {
+            std::queue< std::pair<Node*, char> > nextLevel;
+
+            while (!previousLevel.empty()) {
+                // Get the front and pop
+                iterator = previousLevel.front().first;
+                type = previousLevel.front().second;
+                previousLevel.pop();
+
+                // If it a seperator, print and move ahead
+                if (type == '|') {
+                    std::cout << " || ";
+                    continue;
+                }
+
+                // Print the MBR
+                iterator->object.print();
+
+                if (!iterator->isLeaf()) {
+                    // Push the leftSubtree
+                    if (iterator->leftNode != nullptr) {
+                        nextLevel.push(std::make_pair(iterator->leftNode, 'N'));
+
+                        // Insert a marker to indicate end of child
+                        nextLevel.push(std::make_pair(nullptr, '|'));
+                    }
+
+                    // Push the rightSubtree
+                    if (iterator->rightNode != nullptr) {
+                        nextLevel.push(std::make_pair(iterator->rightNode, 'N'));
+
+                        // Insert a marker to indicate end of child
+                        nextLevel.push(std::make_pair(nullptr, '|'));
+                    }
+                } else {
+                    // Add all child points to the leaf
+                    for (auto child: iterator->objectCache) {
+                        leaves.push(std::make_pair(child, 'L'));
+                    }
+
+                    // marker for end of leaf
+                    leaves.push(std::make_pair(DBObject(), '|'));
+
+                }
+
+                // Delete allocated memory
+                delete iterator;
+            }
+
+            // Seperate different levels
+            std::cout << std::endl << std::endl;
+            previousLevel = nextLevel;
+        }
+
+        // Print all the leaves
+        while (!leaves.empty()) {
+            // Get the front and pop
+            DBObject obj = leaves.front().first;
+            type = leaves.front().second;
+            leaves.pop();
+
+            // If it a seperator, print and move ahead
+            if (type == '|') {
+                std::cout << " || ";
+                continue;
+            }
+
+            // Print the MBR
+            obj.print(); std::cout << " | ";
+        }
+
+        // Prettify
+        std::cout << std::endl << std::endl;
     }
 
     /* Split the node according to the media */
@@ -163,3 +253,4 @@ namespace VPTree {
         }
     }
 }
+

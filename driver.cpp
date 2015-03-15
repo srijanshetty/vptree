@@ -89,5 +89,7 @@ int main() {
     Node *VPRoot = new Node(numeric_limits<double>::max(), obj);
     buildTree(VPRoot);
 
+    VPRoot->printRecursive();
+
     return 0;
 }
