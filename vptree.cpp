@@ -61,7 +61,7 @@ namespace VPTree {
            to the hashmaps */
 
         // Insert the index into the indexCache
-        long long insertIndex = getCacheSize();
+        long long insertIndex = indexCache.size();
         indexCache[object.getObjectID()] = insertIndex;
 
         // Insert the distance into the distanceCache
