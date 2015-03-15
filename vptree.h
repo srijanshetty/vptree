@@ -87,7 +87,7 @@ namespace VPTree {
             double distance(const DBObject &targetObject) { return object.distance(targetObject); }
 
             // Insert an object into the objectCache
-            void insertToCache(DBObject insertObject);
+            void insertToCache(DBObject insertObject, double objectDistance);
 
             // get the distance from the cache
             double getDistanceFromCache(DBObject searchObject);

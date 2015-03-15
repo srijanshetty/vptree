@@ -30,7 +30,7 @@ namespace VPTree {
     Node *VPRoot = nullptr;
 
     // Insert an object into the objectCache
-    void Node::insertToCache(DBObject insertObject) {
+    void Node::insertToCache(DBObject insertObject, double objectDistance) {
         /* obtain the insert index and then add the distance and object
            to the hashmaps */
 
@@ -39,7 +39,7 @@ namespace VPTree {
         indexCache[object.getObjectID()] = insertIndex;
 
         // Insert the distance into the distanceCache
-        distanceCache[insertIndex] = distance(insertObject);
+        distanceCache[insertIndex] = objectDistance;
 
         // Insert the object into the hashmap
         objectCache.push_back(insertObject);
@@ -60,27 +60,25 @@ namespace VPTree {
     }
 
     /* Insert a point into the VPTree */
-    void insert(Node *root, DBObject object) {
+    void insert(Node *root, DBObject object, double objectDistance) {
         // Check if the root is a leaf
         if (root->isLeaf()) {
             /* Directly insert the object into the root's cache and then split if
                we've reached the sample size limit */
-            root->insertToCache(object);
+            root->insertToCache(object, objectDistance);
 
             if (root->getCacheSize() > SAMPLE_SIZE) {
                 root->split();
             }
         } else {
-            /* Compute the distance of the object from the root and insert into the correct subtree */
-            double objectDistance = root->distance(object);
-
             /* It will never be the case that one of the subtrees is empty, this is because we sample
                the objects and then split according to the median, this gurantees that half the nodes
                will go to one side and the rest on the other */
+            /* Compute the distance of the object from the root and insert into the correct subtree */
             if (objectDistance < root->getRadius()) {
-                insert(root->leftNode, object);
+                insert(root->leftNode, object, root->leftNode->distance(object));
             } else {
-                insert(root->rightNode, object);
+                insert(root->rightNode, object, root->rightNode->distance(object));
             }
         }
     }
