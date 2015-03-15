@@ -60,9 +60,9 @@ void buildTree(Node *root) {
             break;
         }
 
-        if (objectID % 100 == 0) {
+        // if (objectID % 500 == 0) {
             cout << endl << "Inserting " << objectID << " ";
-        }
+        // }
 
         // Insert the object into file
         root->insert(DBObject(objectID, dataString, point));
@@ -88,9 +88,6 @@ int main() {
     // Test the insertion routine
     Node *VPRoot = new Node(numeric_limits<double>::max(), obj);
     buildTree(VPRoot);
-
-    // Print tree
-    VPRoot->print();
 
     return 0;
 }
