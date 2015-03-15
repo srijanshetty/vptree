@@ -29,14 +29,30 @@
 namespace VPTree {
     Node *VPRoot = nullptr;
 
-    /* This method is used to initialize the tree by random sampling a give file
-       and selecting a root from that file */
-    void initialize(std::string fileName) {
-        // TODO: Perform sampling
-        long long position = 0;
+    // Insert an object into the objectCache
+    void Node::insertToCache(DBObject insertObject) {
+        /* obtain the insert index and then add the distance and object
+           to the hashmaps */
 
-        // Open the file
-        ifstream ifile(DATAFILE);
+        // Insert the index into the indexCache
+        long long insertIndex = getCacheSize();
+        indexCache[object.getObjectID()] = insertIndex;
+
+        // Insert the distance into the distanceCache
+        distanceCache[insertIndex] = distance(insertObject);
+
+        // Insert the object into the hashmap
+        objectCache.push_back(insertObject);
+    }
+
+    // Get the distance of an object
+    double Node::getDistanceFromCache(DBObject searchObject) {
+        /* Get the index of the object from the indexCache and then get
+           the distance from the distance cache */
+        long long objectIndex = indexCache[searchObject.getObjectID()];
+
+        // Return the distance from the cache
+        return distanceCache[objectIndex];
     }
 }
 

@@ -28,6 +28,11 @@
 
 // STL required by VPTRee
 #include <string>
+#include <vector>
+#include <map>
+
+// Stream output
+#include <iostream>
 
 namespace VPTree {
     class DBObject {
@@ -46,6 +51,9 @@ namespace VPTree {
             std::string getDataString() const { return dataString; }
             long long getObjectID() const { return objectID; }
             Point getObjectPoint() const { return objectPoint; }
+
+            // Compute the distance between objects
+            double distance(const DBObject &targetObject) const { return objectPoint.distance(targetObject.getObjectPoint()); };
     };
 
     class Node {
@@ -55,12 +63,33 @@ namespace VPTree {
             DBObject object;
 
         public:
+            // A cache of elements
+            std::map<long long, long long> indexCache;
+            std::vector<DBObject> objectCache;
+            std::map<long long, double> distanceCache;
+
             // Information about children
             Node *rightNode = nullptr;
             Node *leftNode = nullptr;
 
         public:
-            // Constructor which constructs with an object
+            // Constructor which constructs an object
             Node(double radius, DBObject object) : radius(radius), object(object) { };
+
+            // Accessor methods
+            double getRadius() const { return radius; }
+            double getCacheSize() const { return objectCache.size(); }
+
+            // Ascertain if the node is a leaf
+            bool isLeaf() const { return ((rightNode == nullptr) && (leftNode == nullptr)); }
+
+            // Compute the distance of the root to a object
+            double distance(const DBObject &targetObject) { return object.distance(targetObject); }
+
+            // Insert an object into the objectCache
+            void insertToCache(DBObject insertObject);
+
+            // get the distance from the cache
+            double getDistanceFromCache(DBObject searchObject);
     };
 }
