@@ -20,8 +20,10 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-// Include the configuration paramters
-#include "config.h"
+// Configuration paramters
+#define DIMENSIONS 2
+#define DISTANCE_EUCLIDEAN
+// #define DISTANCE_MAHALONOBIS
 
 // Standard containers
 #include <vector>
@@ -80,4 +82,7 @@ namespace VPTree {
 #endif
             }
     };
+
+    // Setup the static variables
+    long long Point::comparisons = 0;
 }
