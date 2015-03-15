@@ -26,7 +26,41 @@
 // Include the point library
 #include "point.h"
 
+// STL required by VPTRee
+#include <string>
+
 namespace VPTree {
+    class DBObject {
+        private:
+            // Information about the object
+            long long objectID;
+            std::string dataString;
+            Point objectPoint;
+
+        public:
+            // Construct a DBObject
+            DBObject(long long objectID, std::string dataString, Point objectPoint) :
+                objectID(objectID), dataString(dataString), objectPoint(objectPoint) { };
+
+            // Accessor methods
+            std::string getDataString() const { return dataString; }
+            long long getObjectID() const { return objectID; }
+            Point getObjectPoint() const { return objectPoint; }
+    };
+
     class Node {
+        private:
+            // Information about the Node
+            double radius;
+            DBObject object;
+
+        public:
+            // Information about children
+            Node *rightNode = nullptr;
+            Node *leftNode = nullptr;
+
+        public:
+            // Constructor which constructs with an object
+            Node(double radius, DBObject object) : radius(radius), object(object) { };
     };
 }

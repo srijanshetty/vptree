@@ -23,7 +23,21 @@
 // Include the header file
 #include "vptree.h"
 
+// Stream processing
+#include <fstream>
+
 namespace VPTree {
+    Node *VPRoot = nullptr;
+
+    /* This method is used to initialize the tree by random sampling a give file
+       and selecting a root from that file */
+    void initialize(std::string fileName) {
+        // TODO: Perform sampling
+        long long position = 0;
+
+        // Open the file
+        ifstream ifile(DATAFILE);
+    }
 }
 
 
