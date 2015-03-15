@@ -40,5 +40,8 @@ namespace VPTree {
 
             // Compute the distance between this point and a provided point
             double distance(const Point &otherPoint) const;
+
+            // Print the point
+            void print() const;
     };
 }

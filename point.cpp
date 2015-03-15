@@ -22,9 +22,21 @@
 
 #include "point.h"
 
+// Stream processing
+#include <iostream>
+
 namespace VPTree {
     // Store the number of comparisons
     long long comparisons = 0;
+
+    // Print the point
+    void Point::print() const {
+        std::cout << "(";
+        for (long long i = 0; i < DIMENSIONS; ++i) {
+            std::cout << coordinates[i] << ",";
+        }
+        std::cout << "\b)";
+    }
 
     // Compute the distance between this point and a provided point
     double Point::distance(const Point &otherPoint) const {
