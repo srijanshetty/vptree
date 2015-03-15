@@ -20,39 +20,43 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include "point.h"
+// Configuration paramters
+#define DIMENSIONS 2
+#define DISTANCE_EUCLIDEAN
+// #define DISTANCE_MAHALONOBIS
+
+// Standard containers
+#include <vector>
+
+// Math functions
+#include <math.h>
 
 namespace VPTree {
-    // Compute the Euclidean distance to a point
-    double Point::Euclidean(std::vector<double> point) const {
-        double distance = 0;
-        for (long long i = 0; i < DIMENSIONS; ++i) {
-            distance += (point[i] - coordinates[i]) * (point[i] - coordinates[i]);
-        }
-        return sqrt(distance);
-    }
+    class Point {
+        private:
+            // Store the number of comparisons
+            static long long comparisons;
 
-    // Compute the Mahalonobis distance to a point
-    double Point::Mahalonobis(std::vector<double> point) const {
-        return Euclidean(point);
-    }
+            // Update the number of comparisons
+            void incrementComparisons() { ++comparisons; }
 
-    // Compute the distance between this point and a provided point
-    double Point::distance(std::vector<double> point) {
-        // Update the distance counter
-        Point::incrementComparisons();
+        public:
+            // Return the number of euclidean comparisons
+            long long getComparisons() const { return comparisons; }
 
-#ifdef DISTANCE_EUCLIDEAN
-        // Call the distance function
-        return Euclidean(point);
-#endif
+        private:
+            std::vector <double> coordinates;
 
-#ifdef DISTANCE_MAHALONOBIS
-        // Call the distance function
-        return Mahalonobis(point);
-#endif
-    }
+        public:
+            Point(std::vector<double> _coordinates) : coordinates(_coordinates) {};
 
-    // Setup the static variables
-    long long Point::comparisons = 0;
+            // Compute the Euclidean distance to another point
+            double Euclidean(std::vector<double> point) const;
+
+            // Compute the Mahalonobis distance to a point
+            double Mahalonobis(std::vector<double> point) const;
+
+            // Compute the distance between this point and a provided point
+            double distance(std::vector<double> point);
+    };
 }
