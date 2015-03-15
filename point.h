@@ -33,7 +33,7 @@ namespace VPTree {
     class Point {
         public:
             // The coordiantes of the point
-            std::vector <double> coordinates = std::vector<double>(0.0, DIMENSIONS);
+            std::vector <double> coordinates = std::vector<double>(DIMENSIONS, 0.0);
 
         public:
             // The default constructor
