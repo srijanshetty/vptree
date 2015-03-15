@@ -31,6 +31,7 @@
 
 // Math
 #include <limits>
+#include "statistics.cpp"
 
 namespace VPTree {
     // Compute distance from root
@@ -59,13 +60,13 @@ namespace VPTree {
 
         // Print the leftNode
         if (leftNode != nullptr) {
-            std::cout << std::endl << "\tLeftNode: ";
+            std::cout << std::endl << "LeftSubtree: ";
             leftNode->object.print();
         }
 
         // Print the rightNode
         if (rightNode != nullptr) {
-            std::cout << std::endl << "\tRightNode: ";
+            std::cout << std::endl << "RightSubtree: ";
             rightNode->object.print();
         }
     }
@@ -74,6 +75,66 @@ namespace VPTree {
     void Node::split() {
         /* We have to split the current node into three nodes, a parent and two children
            the nodes in cache as the sample */
+
+        /* Compute the point with the largest vairance in distance */
+        long long objectPosition = -1;
+        double maxVariance = std::numeric_limits<double>::min();
+        std::vector<double> maxVarianceDistances;
+        std::vector<double> allDistances;
+
+        long long size = objectCache.size();
+        for (long long i = 0; i < size; ++i) {
+            // Store the distances at the current level to compute variance
+            std::vector<double> currentDistances;
+
+            // Compute all distances
+            for (long long j = 0; j < size; ++j) {
+                double currentDistance = objectCache[i].distance(objectCache[j]);
+
+                // Push into vectors
+                currentDistances.push_back(currentDistance);
+                allDistances.push_back(currentDistance);
+            }
+
+            // Compute the variance of the array
+            double currentVariance = Statistics::getVariance(currentDistances);
+            if (currentVariance > maxVariance) {
+                maxVariance = currentVariance;
+                objectPosition = i;
+                maxVarianceDistances = currentDistances;
+            }
+        }
+
+        // The object with max variance is the object this node will contain
+        object = objectCache[objectPosition];
+
+        // Compute the median of the distances to other objects to find radius
+        std::vector<double> tempDistances = allDistances;
+        sort(tempDistances.begin(), tempDistances.end());
+        radius = tempDistances[(tempDistances.size() / 2)];
+
+        /* Now divide the object cache into two sets depending on the object we
+           found and the value of radius */
+        leftNode = new Node();
+        rightNode = new Node();
+
+        // Divide the objects between the two nodes
+        for (long long i = 0; i < size; ++i) {
+            if (maxVarianceDistances[i] < radius) {
+                leftNode->objectCache.push_back(objectCache[i]);
+            } else {
+                rightNode->objectCache.push_back(objectCache[i]);
+            }
+        }
+
+        // Clean up the cache
+        objectCache.clear();
+
+#ifdef DEBUG_SPLIT
+        std::cout << std::endl << std::endl << "Parent: "; print();
+        std::cout << std::endl << std::endl << "LeftNode: "; leftNode->print();
+        std::cout << std::endl << std::endl << "RightNode: "; rightNode->print();
+#endif
     }
 
     /* Insert a point into the VPTree */
