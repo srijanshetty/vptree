@@ -254,7 +254,7 @@ namespace VPTree {
             /* It will never be the case that one of the subtrees is empty, this is because we sample
                the objects and then split according to the median, this gurantees that half the nodes
                will go to one side and the rest on the other */
-            if (objectDistance <= radius) {
+            if (objectDistance < radius) {
                 leftNode->insert(object);
             } else {
                 rightNode->insert(object);
@@ -288,7 +288,7 @@ namespace VPTree {
 #endif
             }
 
-            if (pointDistance > (rangeRadius + radius)) {
+            if (pointDistance >= (rangeRadius + radius)) {
                 // The case when the hypersphere is completely in outside
                 rightNode->rangeSearch(point, rangeRadius);
             } else if (pointDistance == fabs(rangeRadius - radius)) {
