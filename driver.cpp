@@ -158,7 +158,7 @@ int main() {
     buildTree(VPRoot);
 
     // Process the queries
-    // processQuery(VPRoot);
+    processQuery(VPRoot);
 
     return 0;
 }
