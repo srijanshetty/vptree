@@ -72,6 +72,75 @@ void buildTree(Node *root) {
     ifile.close();
 }
 
+void processQuery(Node *root) {
+    ifstream ifile;
+    ifile.open(QUERYFILE, ios::in);
+
+    long query;
+
+    // Loop over the entire file
+    while (ifile >> query) {
+        // Get the point from the file
+        vector <double> coordinates;
+        double coordinate;
+        for (long i = 0; i < DIMENSIONS; ++i) {
+            ifile >> coordinate;
+            coordinates.push_back(coordinate);
+        }
+        Point point(coordinates);
+
+#ifdef OUTPUT
+            cout << endl << query << " ";
+            point.print();
+#endif
+
+        if (query == 1) {
+            // Get the range
+            double range;
+            ifile >> range;
+
+#ifdef OUTPUT
+            cout << " " << range << endl;
+#endif
+
+#ifdef TIME
+            cout << query << " ";
+            auto start = std::chrono::high_resolution_clock::now();
+#endif
+            // rangeSearch
+            root->rangeSearch(point, range * 1.0);
+#ifdef TIME
+            auto elapsed = std::chrono::high_resolution_clock::now() - start;
+            long long microseconds = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
+            cout << microseconds << endl;
+#endif
+        } else if (query == 2) {
+            // Get the number of points
+            long k;
+            ifile >> k;
+
+#ifdef OUTPUT
+            cout << " " << k << endl;
+#endif
+
+#ifdef TIME
+            cout << query << " ";
+            auto start = std::chrono::high_resolution_clock::now();
+#endif
+            // kNNSearch
+            // root->kNNSearch(point, k);
+#ifdef TIME
+            auto elapsed = std::chrono::high_resolution_clock::now() - start;
+            long long microseconds = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
+            cout << microseconds << endl;
+#endif
+        }
+    }
+
+    // Close the file
+    ifile.close();
+}
+
 int main() {
     // Test the insertion routine
     vector<double> p1 = {0.0, 0.0};
