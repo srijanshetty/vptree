@@ -29,6 +29,7 @@
 // STL Algorithm
 #include <algorithm>
 #include <queue>
+#include <tuple>
 
 // Math
 #include <limits>
@@ -220,5 +221,51 @@ namespace VPTree {
             }
         }
     }
-}
+    /* Perform kNNSearch with the currentNode as the root */
+    void Node::kNNSearch(Point point, long k) {
+        // Use the namespace std inside this function
+        using namespace std;
 
+        class comparator {
+            public:
+                bool operator()
+                    (const tuple<char, Node*, DBObject, double> &t1, const tuple<char, Node*, DBObject, double> &t2) {
+                        return std::get<3>(t1) > std::get<3>(t2);
+                    }
+        };
+
+        priority_queue<tuple<char, Node*, DBObject, double>, vector< tuple<char, Node*, DBObject, double> >, comparator> queue;
+
+        // Push the object at root and the left and right subtree
+        queue.push(std::make_tuple('N', this, DBObject(), this->distance(point)));
+
+        // Now we find k nearest neighbours
+        long count = 0;
+        while (!queue.empty() && count < k) {
+            char type = std::get<0>(queue.top());
+            Node* currentNode = std::get<1>(queue.top());
+            DBObject object = std::get<2>(queue.top());
+            // double objectDistance = std::get<3>(queue.top());
+            queue.pop();
+
+            if (type == 'O') {
+#ifdef OUTPUT
+                object.print(); std::cout << std::endl;
+#endif
+                count++;
+            } else if (type == 'N') {
+                if(currentNode->isLeaf()) {
+                    // Traverse through all the points in the cache and push them
+                    for (auto object : currentNode->objectCache) {
+                        queue.push(std::make_tuple('O', nullptr, object, object.distance(point)));
+                    }
+                } else {
+                    // Push the subtrees and the root object
+                    queue.push(std::make_tuple('O', nullptr, currentNode->getObjectPoint(), currentNode->distance(point)));
+                    queue.push(std::make_tuple('N', currentNode->leftNode, DBObject(), currentNode->leftNode->distance(point)));
+                    queue.push(std::make_tuple('N', currentNode->rightNode, DBObject(), currentNode->rightNode->distance(point)));
+                }
+            }
+        }
+    }
+}
