@@ -219,6 +219,11 @@ namespace VPTree {
 
         // Divide the objects between the two nodes
         for (long long i = 0; i < size; ++i) {
+            // Do not add the root object to any of the children
+            if (i == objectPosition) {
+                continue;
+            }
+
             if (maxVarianceDistances[i] < radius) {
                 leftNode->objectCache.push_back(objectCache[i]);
             } else {
