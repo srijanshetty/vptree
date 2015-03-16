@@ -29,7 +29,7 @@
 namespace VPTree {
 #ifdef DISTANCE_MAHALONOBIS
     // Initialize the mahalonobis matrix
-    std::vector< std::vector<double> > Point::matrix;
+    std::vector< std::vector<double> > Point::mat;
 
     // Initialize the Mahalonobis matrix
     void Point::initializeMatrix() {
@@ -44,7 +44,7 @@ namespace VPTree {
                 coordinates.push_back(coordinate);
                 std::cout << coordinate << " ";
             }
-            matrix.push_back(coordinates);
+            mat.push_back(coordinates);
             std::cout << std::endl;
         }
     }
@@ -66,22 +66,19 @@ namespace VPTree {
     double Point::distance(const Point &otherPoint) const {
         Metrics::incrementComparisons();
 
+        double componentDistance = 0;
 #ifdef DISTANCE_EUCLIDEAN
-        // Compute the Euclidean distance to another point
-        double distance = 0;
         for (long long i = 0; i < DIMENSIONS; ++i) {
-            distance += (otherPoint.coordinates[i] - coordinates[i]) * (otherPoint.coordinates[i] - coordinates[i]);
+            componentDistance += (otherPoint.coordinates[i] - coordinates[i]) * (otherPoint.coordinates[i] - coordinates[i]);
         }
-        return sqrt(distance);
 #endif
 
 #ifdef DISTANCE_MAHALONOBIS
-        // Compute the Mahalonobis distance to a point
-        double distance = 0;
-        for (long long i = 0; i < DIMENSIONS; ++i) {
-            distance += (otherPoint.coordinates[i] - coordinates[i]) * (otherPoint.coordinates[i] - coordinates[i]);
-        }
-        return sqrt(distance);
+        componentDistance =
+            mat[0][0] * (coordinates[0] - otherPoint.coordinates[0]) * (coordinates[0] - otherPoint.coordinates[0])
+            + mat[1][1] * (coordinates[1] - otherPoint.coordinates[1]) * (coordinates[1] - otherPoint.coordinates[1])
+            + (mat[0][1] + mat[1][0]) * (coordinates[0] - otherPoint.coordinates[0]) * (coordinates[1] - otherPoint.coordinates[1]);
 #endif
+        return sqrt(componentDistance);
     }
 }

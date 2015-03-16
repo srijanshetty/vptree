@@ -108,17 +108,25 @@ void processQuery(Node *root) {
 #ifdef OUTPUT
             cout << " " << range << endl;
 #endif
-
 #ifdef TIME
             cout << query << " ";
             auto start = std::chrono::high_resolution_clock::now();
 #endif
+#ifdef DISTANCE
+            cout << query << " ";
+            Metrics::resetComparisons();
+#endif
+
             // rangeSearch
             root->rangeSearch(point, range * 1.0);
 #ifdef TIME
             auto elapsed = std::chrono::high_resolution_clock::now() - start;
             long long microseconds = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
             cout << microseconds << endl;
+#endif
+
+#ifdef DISTANCE
+            cout << Metrics::getComparisons() << endl;
 #endif
         } else if (query == 3) {
             // Get the number of points
@@ -133,12 +141,20 @@ void processQuery(Node *root) {
             cout << query << " ";
             auto start = std::chrono::high_resolution_clock::now();
 #endif
+#ifdef DISTANCE
+            cout << query << " ";
+            Metrics::resetComparisons();
+#endif
             // kNNSearch
             root->kNNSearch(point, k);
 #ifdef TIME
             auto elapsed = std::chrono::high_resolution_clock::now() - start;
             long long microseconds = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
             cout << microseconds << endl;
+#endif
+
+#ifdef DISTANCE
+            cout << Metrics::getComparisons() << endl;
 #endif
         }
     }

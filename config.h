@@ -22,12 +22,13 @@
 
 /* ------------- STATS -------------- */
 // #define OUTPUT
-#define TIME
+// #define TIME
+#define DISTANCE
 
 /* ------------- POINT -------------- */
 #define DIMENSIONS 2
-#define DISTANCE_EUCLIDEAN
-// #define DISTANCE_MAHALONOBIS
+// #define DISTANCE_EUCLIDEAN
+#define DISTANCE_MAHALONOBIS
 
 #ifdef DISTANCE_MAHALONOBIS
 #define MATRIXFILE "./assgn5_matrix.txt"

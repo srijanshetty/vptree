@@ -49,7 +49,7 @@ namespace VPTree {
 #ifdef DISTANCE_MAHALONOBIS
         private:
             // The matrix for mahalonobis distance
-            static std::vector< std::vector<double> > matrix;
+            static std::vector< std::vector<double> > mat;
 
         public:
             // Intialize the matrix
