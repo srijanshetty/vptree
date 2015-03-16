@@ -20,6 +20,9 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/* ------------- STATS -------------- */
+#define OUTPUT
+
 /* ------------- POINT -------------- */
 #define DIMENSIONS 2
 #define DISTANCE_EUCLIDEAN
@@ -27,7 +30,8 @@
 
 /* ------------- VPTREE ------------- */
 #define POINTS 1000000
-#define SAMPLE_SIZE (POINTS * 0.001)
+// #define SAMPLE_SIZE (POINTS * 0.001)
+#define SAMPLE_SIZE 10
 
 /* ------------- DATAFILE------------ */
 #define DATAFILE "./assgn5_data.txt"

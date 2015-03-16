@@ -73,23 +73,16 @@ void buildTree(Node *root) {
 }
 
 int main() {
-    // Test points
-    vector<double> p1 = {1.0, 0.0};
-    vector<double> p2 = {4.0, 0.0};
-
-    Point alpha(p1);
-    Point beta(p2);
-
-    // cout << alpha.distance(beta);
-
-    // test objects
-    DBObject obj(0, "srijan", p1);
-
     // Test the insertion routine
+    vector<double> p1 = {0.0, 0.0};
+    DBObject obj(0, "srijan", p1);
     Node *VPRoot = new Node(numeric_limits<double>::max(), obj);
     buildTree(VPRoot);
 
-    VPRoot->printRecursive();
+    // VPRoot->printRecursive();
+
+    vector<double> p2 = {0.0, 0.0};
+    VPRoot->rangeSearch(p1, 10);
 
     return 0;
 }
