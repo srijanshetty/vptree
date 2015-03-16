@@ -85,16 +85,13 @@ void printRecursive(const Node *root) {
             } else {
                 // Add all child points to the leaf
                 for (auto child: iterator->objectCache) {
-                    // leaves.push(std::make_pair(child, 'L'));
+                    leaves.push(std::make_pair(child, 'L'));
                 }
 
                 // marker for end of leaf
-                // leaves.push(std::make_pair(DBObject(), '|'));
+                leaves.push(std::make_pair(DBObject(), '|'));
 
             }
-
-            // Delete allocated memory
-            delete iterator;
         }
 
         // Seperate different levels
@@ -239,9 +236,7 @@ int main() {
     Node *VPRoot = new Node(numeric_limits<double>::max(), obj);
     buildTree(VPRoot);
 
-    // printRecursive(VPRoot);
-    VPRoot->print();
-    cout << endl << endl;
+    printRecursive(VPRoot);
 
     vector<double> p2 = {0.0, 0.0};
     VPRoot->kNNSearch(p2, 9);
