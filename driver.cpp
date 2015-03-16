@@ -131,7 +131,7 @@ void processQuery(Node *root) {
             auto start = std::chrono::high_resolution_clock::now();
 #endif
             // kNNSearch
-            // root->kNNSearch(point, k);
+            root->kNNSearch(point, k);
 #ifdef TIME
             auto elapsed = std::chrono::high_resolution_clock::now() - start;
             long long microseconds = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
@@ -145,16 +145,14 @@ void processQuery(Node *root) {
 }
 
 int main() {
-    // Test the insertion routine
-    vector<double> p1 = {0.0, 0.0};
-    DBObject obj(0, "srijan", p1);
-    Node *VPRoot = new Node(numeric_limits<double>::max(), obj);
+    // Build the tree using the points
+    Node *VPRoot = new Node();
     buildTree(VPRoot);
 
-    printRecursive(VPRoot);
-
-    vector<double> p2 = {0.0, 0.0};
-    VPRoot->kNNSearch(p2, 9);
+    VPRoot->printRecursive();
+    VPRoot->kNNSearch(vector<double>(2, 0.0), 1);
+    // Process the queries
+    // processQuery();
 
     return 0;
 }
