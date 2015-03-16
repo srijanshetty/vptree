@@ -289,7 +289,7 @@ namespace VPTree {
             // Print the root point if it matches the criterion
             if (pointDistance <= rangeRadius) {
 #ifdef OUTPUT
-                std::cout << std::endl; object.print();
+                std::cout << std::endl; nodeObject.print();
 #endif
             }
 
