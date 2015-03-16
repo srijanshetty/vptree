@@ -181,8 +181,8 @@ void processQuery(Node *root) {
         Point point(coordinates);
 
 #ifdef OUTPUT
-            cout << endl << query << " ";
-            point.print();
+        cout << endl << query << " ";
+        point.print();
 #endif
 
         if (query == 1) {
@@ -239,10 +239,12 @@ int main() {
     Node *VPRoot = new Node(numeric_limits<double>::max(), obj);
     buildTree(VPRoot);
 
-    // VPRoot->printRecursive();
+    // printRecursive(VPRoot);
+    VPRoot->print();
+    cout << endl << endl;
 
     vector<double> p2 = {0.0, 0.0};
-    VPRoot->rangeSearch(p1, 10);
+    VPRoot->kNNSearch(p2, 9);
 
     return 0;
 }
