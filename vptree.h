@@ -99,7 +99,8 @@ namespace VPTree {
             double distance(const Point &point) const;
 
             // Print the node
-            void print();
+            void print() const;
+            void printRecursive() const;
 
             // Split the node according to median
             void split();
