@@ -26,8 +26,8 @@
 #include <iostream>
 
 namespace VPTree {
-    // Store the number of comparisons
-    long long comparisons = 0;
+    // Initialize the comparisons in Metrics
+    long long Metrics::comparisons = 0;
 
     // Print the point
     void Point::print() const {
@@ -40,7 +40,7 @@ namespace VPTree {
 
     // Compute the distance between this point and a provided point
     double Point::distance(const Point &otherPoint) const {
-        ++comparisons;
+        Metrics::incrementComparisons();
 
 #ifdef DISTANCE_EUCLIDEAN
         // Compute the Euclidean distance to another point

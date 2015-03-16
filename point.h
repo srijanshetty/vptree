@@ -30,6 +30,21 @@
 #include <math.h>
 
 namespace VPTree {
+    class Metrics {
+        private:
+            static long long comparisons;
+
+        public:
+            // Increment the number of comparisons
+            static void incrementComparisons() { ++comparisons; }
+
+            // Reset the counter
+            static void resetComparisons() { comparisons = 0; }
+
+            // Print the comparisons
+            static long long getComparisons() { return comparisons; }
+    };
+
     class Point {
         public:
             // The coordiantes of the point
