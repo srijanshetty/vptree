@@ -101,7 +101,7 @@ namespace VPTree {
             void print();
 
             // Print the tree recursive
-            void printRecursive();
+            void printRecursive() const;
 
             // Split the node according to median
             void split();

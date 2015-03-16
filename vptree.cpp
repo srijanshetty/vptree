@@ -82,21 +82,21 @@ namespace VPTree {
     }
 
     // Print the tree recursively
-    void Node::printRecursive() {
+    void Node::printRecursive() const {
         // Prettify
         std::cout << std::endl << std::endl;
 
         // To store the previous Level
-        std::queue< std::pair<Node*, char> > previousLevel;
+        std::queue< std::pair<const Node*, char> > previousLevel;
         previousLevel.push(std::make_pair(this, 'N'));
 
         // To store the leaves
         std::queue< std::pair<DBObject, char> > leaves;
 
-        Node *iterator;
+        const Node *iterator;
         char type;
         while (!previousLevel.empty()) {
-            std::queue< std::pair<Node*, char> > nextLevel;
+            std::queue< std::pair<const Node*, char> > nextLevel;
 
             while (!previousLevel.empty()) {
                 // Get the front and pop
