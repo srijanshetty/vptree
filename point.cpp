@@ -42,10 +42,8 @@ namespace VPTree {
             for (long long j = 0; j < DIMENSIONS; ++j) {
                 ifile >> coordinate;
                 coordinates.push_back(coordinate);
-                std::cout << coordinate << " ";
             }
             mat.push_back(coordinates);
-            std::cout << std::endl;
         }
     }
 #endif
