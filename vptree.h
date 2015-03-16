@@ -57,8 +57,9 @@ namespace VPTree {
             long long getObjectID() const { return objectID; }
             Point getObjectPoint() const { return objectPoint; }
 
-            // Compute the distance between objects
+            // Compute the distance to either to a DBObject or to a Point
             double distance(const DBObject &targetObject) const { return objectPoint.distance(targetObject.getObjectPoint()); };
+            double distance(const Point &targetPoint) const { return objectPoint.distance(targetPoint); };
 
             // Print the object
             void print() const { objectPoint.print(); std::cout << " :: " << objectID << " :: " << dataString; }
@@ -92,8 +93,9 @@ namespace VPTree {
             // Ascertain if the node is a leaf
             bool isLeaf() const { return ((rightNode == nullptr) && (leftNode == nullptr)); }
 
-            // Compute the distance of the root to a object
+            // Compute the distance of the root to a DBObject or to Point
             double distance(const DBObject &targetObject) const;
+            double distance(const Point &point) const;
 
             // Print the node
             void print();
@@ -106,5 +108,8 @@ namespace VPTree {
 
             // Insert an object into the node
             void insert(DBObject targetObject);
+
+            // Perform a rangeSearch on the tree
+            void rangeSearch(Point point, double rangeRadius);
     };
 }

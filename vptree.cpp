@@ -35,10 +35,19 @@
 #include "statistics.cpp"
 
 namespace VPTree {
-    // Compute distance from root
+    // Compute distance of an DBObject from root
     double Node::distance(const DBObject &targetObject) const {
         if (!isLeaf()) {
             return object.distance(targetObject);
+        } else {
+            return std::numeric_limits<double>::max();
+        }
+    }
+
+    // Compute the distance of a Point from the root
+    double Node::distance(const Point &point) const {
+        if (!isLeaf()) {
+            return object.distance(point);
         } else {
             return std::numeric_limits<double>::max();
         }
