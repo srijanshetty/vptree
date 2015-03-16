@@ -27,8 +27,7 @@
 
 /* ------------- VPTREE ------------- */
 #define POINTS 1000000
-// #define SAMPLE_SIZE (POINTS * 0.001)
-#define SAMPLE_SIZE 10
+#define SAMPLE_SIZE (POINTS * 0.001)
 
 /* ------------- DATAFILE------------ */
 #define DATAFILE "./assgn5_data.txt"

@@ -60,9 +60,9 @@ void buildTree(Node *root) {
             break;
         }
 
-        // if (objectID % 500 == 0) {
+        if (objectID % 10000 == 0) {
             cout << endl << "Inserting " << objectID << " ";
-        // }
+        }
 
         // Insert the object into file
         root->insert(DBObject(objectID, dataString, point));
