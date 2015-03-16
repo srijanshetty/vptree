@@ -244,7 +244,7 @@ namespace VPTree {
                we've reached the sample size limit */
             objectCache.push_back(object);
 
-            if (getCacheSize() > SAMPLE_SIZE) {
+            if (getCacheSize() >= SAMPLE_SIZE) {
                 split();
             }
         } else {
@@ -254,10 +254,49 @@ namespace VPTree {
             /* It will never be the case that one of the subtrees is empty, this is because we sample
                the objects and then split according to the median, this gurantees that half the nodes
                will go to one side and the rest on the other */
-            if (objectDistance < radius) {
+            if (objectDistance <= radius) {
                 leftNode->insert(object);
             } else {
                 rightNode->insert(object);
+            }
+        }
+    }
+
+    /* Perform rangeSearch on the current node */
+    void Node::rangeSearch(Point point, double rangeRadius) {
+        if (isLeaf()) {
+            // In this case we just have to check the cache for hits
+            for (auto object : objectCache) {
+                // Compute the distance of the point to object
+                double pointDistance = object.distance(point);
+
+                // Now check if the point lies in the range
+                if (pointDistance <= rangeRadius) {
+#ifdef OUTPUT
+                    std::cout << std::endl; object.print();
+#endif
+                }
+            }
+        } else {
+            // Here we make use of the bounds to prune the trees
+            double pointDistance = distance(point);
+
+            // Print the root point if it matches the criterion
+            if (pointDistance <= rangeRadius) {
+#ifdef OUTPUT
+                std::cout << std::endl; object.print();
+#endif
+            }
+
+            if (pointDistance > (rangeRadius + radius)) {
+                // The case when the hypersphere is completely in outside
+                rightNode->rangeSearch(point, rangeRadius);
+            } else if (pointDistance == fabs(rangeRadius - radius)) {
+                // In case the hypersphere is completely inside the leftNode
+                leftNode->rangeSearch(point, rangeRadius);
+            } else {
+                leftNode->rangeSearch(point, rangeRadius);
+                rightNode->rangeSearch(point, rangeRadius);
             }
         }
     }
