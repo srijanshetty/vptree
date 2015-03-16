@@ -69,7 +69,7 @@ namespace VPTree {
         private:
             // Information about the Node
             double radius = std::numeric_limits<double>::max();
-            DBObject object = DBObject();
+            DBObject nodeObject = DBObject();
 
         public:
             // A cache of elements
@@ -84,7 +84,7 @@ namespace VPTree {
             Node() { };
 
             // Constructor which constructs an object
-            Node(double radius, DBObject object) : radius(radius), object(object) { };
+            Node(double radius, DBObject nodeObject) : radius(radius), nodeObject(nodeObject) { };
 
             // Accessor methods
             double getRadius() const { return radius; }

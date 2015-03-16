@@ -38,7 +38,7 @@ namespace VPTree {
     // Compute distance of an DBObject from root
     double Node::distance(const DBObject &targetObject) const {
         if (!isLeaf()) {
-            return object.distance(targetObject);
+            return nodeObject.distance(targetObject);
         } else {
             return std::numeric_limits<double>::max();
         }
@@ -47,7 +47,7 @@ namespace VPTree {
     // Compute the distance of a Point from the root
     double Node::distance(const Point &point) const {
         if (!isLeaf()) {
-            return object.distance(point);
+            return nodeObject.distance(point);
         } else {
             return std::numeric_limits<double>::max();
         }
@@ -57,7 +57,7 @@ namespace VPTree {
     void Node::print()  {
         // Print the object
         std::cout << std::endl << "Object: ";
-        object.print();
+        nodeObject.print();
 
         // Print the cache
         std::cout << std::endl << "Cache: ";
@@ -71,13 +71,13 @@ namespace VPTree {
         // Print the leftNode
         if (leftNode != nullptr) {
             std::cout << std::endl << "LeftSubtree: ";
-            leftNode->object.print();
+            leftNode->nodeObject.print();
         }
 
         // Print the rightNode
         if (rightNode != nullptr) {
             std::cout << std::endl << "RightSubtree: ";
-            rightNode->object.print();
+            rightNode->nodeObject.print();
         }
     }
 
@@ -111,7 +111,7 @@ namespace VPTree {
                 }
 
                 // Print the MBR
-                iterator->object.print();
+                iterator->nodeObject.print();
 
                 if (!iterator->isLeaf()) {
                     // Push the leftSubtree
@@ -205,7 +205,7 @@ namespace VPTree {
         }
 
         // The object with max variance is the object this node will contain
-        object = objectCache[objectPosition];
+        nodeObject = objectCache[objectPosition];
 
         // Compute the median of the distances to other objects to find radius
         std::vector<double> tempDistances = allDistances;
