@@ -89,6 +89,7 @@ namespace VPTree {
             // Accessor methods
             double getRadius() const { return radius; }
             double getCacheSize() const { return objectCache.size(); }
+            DBObject getObjectPoint() const { return nodeObject; }
 
             // Ascertain if the node is a leaf
             bool isLeaf() const { return ((rightNode == nullptr) && (leftNode == nullptr)); }
@@ -100,9 +101,6 @@ namespace VPTree {
             // Print the node
             void print();
 
-            // Print the tree recursive
-            void printRecursive() const;
-
             // Split the node according to median
             void split();
 
@@ -110,6 +108,9 @@ namespace VPTree {
             void insert(DBObject targetObject);
 
             // Perform a rangeSearch on the tree
-            void rangeSearch(Point point, double rangeRadius);
+            void rangeSearch(Point point, double rangeRadius) const;
+
+            // Perform a kNNSearch
+            void kNNSearch(Point point, long k);
     };
 }
