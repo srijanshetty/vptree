@@ -33,6 +33,9 @@
 // Limits of numbers
 #include <limits>
 
+// For timing
+#include <chrono>
+
 using namespace std;
 using namespace VPTree;
 
@@ -97,7 +100,7 @@ void processQuery(Node *root) {
         point.print();
 #endif
 
-        if (query == 1) {
+        if (query == 2) {
             // Get the range
             double range;
             ifile >> range;
@@ -117,7 +120,7 @@ void processQuery(Node *root) {
             long long microseconds = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
             cout << microseconds << endl;
 #endif
-        } else if (query == 2) {
+        } else if (query == 3) {
             // Get the number of points
             long k;
             ifile >> k;
@@ -154,10 +157,8 @@ int main() {
     Node *VPRoot = new Node();
     buildTree(VPRoot);
 
-    VPRoot->printRecursive();
-    VPRoot->kNNSearch(vector<double>(2, 0.0), 1);
     // Process the queries
-    // processQuery();
+    // processQuery(VPRoot);
 
     return 0;
 }
