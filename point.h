@@ -46,6 +46,16 @@ namespace VPTree {
     };
 
     class Point {
+#ifdef DISTANCE_MAHALONOBIS
+        private:
+            // The matrix for mahalonobis distance
+            static std::vector< std::vector<double> > matrix;
+
+        public:
+            // Intialize the matrix
+            static void initializeMatrix();
+#endif
+
         public:
             // The coordiantes of the point
             std::vector <double> coordinates = std::vector<double>(DIMENSIONS, 0.0);

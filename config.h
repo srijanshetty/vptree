@@ -28,6 +28,10 @@
 #define DISTANCE_EUCLIDEAN
 // #define DISTANCE_MAHALONOBIS
 
+#ifdef DISTANCE_MAHALONOBIS
+#define MATRIXFILE "./assgn5_matrix.txt"
+#endif
+
 /* ------------- VPTREE ------------- */
 #define POINTS 1000000
 // #define SAMPLE_SIZE (POINTS * 0.001)

@@ -24,8 +24,32 @@
 
 // Stream processing
 #include <iostream>
+#include <fstream>
 
 namespace VPTree {
+#ifdef DISTANCE_MAHALONOBIS
+    // Initialize the mahalonobis matrix
+    std::vector< std::vector<double> > Point::matrix;
+
+    // Initialize the Mahalonobis matrix
+    void Point::initializeMatrix() {
+        std::ifstream ifile(MATRIXFILE);
+
+        // read the matrix from file
+        double coordinate;
+        for (long long i = 0; i < DIMENSIONS; ++i) {
+            std::vector<double> coordinates;
+            for (long long j = 0; j < DIMENSIONS; ++j) {
+                ifile >> coordinate;
+                coordinates.push_back(coordinate);
+                std::cout << coordinate << " ";
+            }
+            matrix.push_back(coordinates);
+            std::cout << std::endl;
+        }
+    }
+#endif
+
     // Initialize the comparisons in Metrics
     long long Metrics::comparisons = 0;
 

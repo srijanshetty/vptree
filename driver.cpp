@@ -145,6 +145,11 @@ void processQuery(Node *root) {
 }
 
 int main() {
+#ifdef DISTANCE_MAHALONOBIS
+    // Intialize the Mahalonobis matrix
+    Point::initializeMatrix();
+#endif
+
     // Build the tree using the points
     Node *VPRoot = new Node();
     buildTree(VPRoot);
